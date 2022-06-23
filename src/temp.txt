@@ -1,0 +1,36 @@
+import './App.css';
+import axios from 'axios';
+import React,{useState} from 'react'
+import { Button } from 'reactstrap';
+import Nav from './components/Nav'
+
+function App() {
+  const [output,setOutput]=useState("")
+  const handleSubmit=async()=>{
+    const payload={
+      language: "cpp",
+      code
+    };try{
+    const {data}=await axios.post("http://localhost:5000/run",payload)
+    setOutput(data.output)}
+    catch(err){console.log(err.response)}
+  }
+  const [code, setCode] = useState('')
+  return (
+    <>
+      <Nav/>
+      <br />
+      <div className="container">
+        <div className="outer">
+          <textarea name="" id="textarea" cols="200" rows="20" value={code} onChange={(e)=>{setCode(e.target.value)}}></textarea>
+        </div>
+        <br />
+        <button color="success" onClick={handleSubmit} style={{marginBottom:'20px'}}>Submit</button>{' '}
+        <br />
+        <p style={{color:'white'}}>{output}</p>
+      </div>
+    </>
+  );
+}
+
+export default App;
