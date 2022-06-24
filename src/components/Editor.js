@@ -11,7 +11,7 @@ import "ace-builds/src-noconflict/theme-solarized_light";
 import "ace-builds/src-noconflict/theme-twilight";
 import axios from "axios";
 import moment from "moment";
-
+import stubs from "../defaultStubs"
 
 
 const Editor = (props) => {
@@ -84,7 +84,7 @@ const Editor = (props) => {
     };
     const setDefaultLanguage = () => {
       localStorage.setItem("default-language", language);
-      console.log(`${language} set as default!`);
+      props.showAlert(`${language} set as default!`);
     };
    
   console.log(status)
@@ -109,7 +109,7 @@ const Editor = (props) => {
       <div className="container">
         <br />
           <div class="d-flex align-items-center">
-  <div class="p-2"><select
+  <div class="p-2"><select className="btn btn-sm btn-dark"
           value={language}
           onChange={(e) => {
               setLanguage(e.target.value);
@@ -156,6 +156,7 @@ const Editor = (props) => {
   theme={theme}
   splits={1}
   orientation="beside"
+  defaultValue={["Hello world!"]}
   value={code}
   width="85%"
   editorProps={{ $blockScrolling: true }}

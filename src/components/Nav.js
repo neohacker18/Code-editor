@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export default function Navbar(props) {
   const setDefaultTheme = () => {
-    localStorage.setItem("default-theme", props.mode);
+    localStorage.setItem("default-mode", props.mode);
     console.log(`${props.mode} set as default!`);
   };
   return (
@@ -18,7 +18,7 @@ export default function Navbar(props) {
         </ul>
         <div className={`form-check form-switch text-${props.mode==='light'?'dark':'light'}`}>
         <input className="form-check-input" onClick={props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-        <label className="form-check-label" htmlFor="flexSwitchCheckDefault" onClick={setDefaultTheme}>{props.mode==='light'?'Enable':'Disable'} Dark Mode</label>
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode==='light'?'Enable':'Disable'} Dark Mode</label>
         </div>
       </div>
     </div>
