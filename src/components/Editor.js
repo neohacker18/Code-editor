@@ -11,8 +11,6 @@ import "ace-builds/src-noconflict/theme-solarized_light";
 import "ace-builds/src-noconflict/theme-twilight";
 import axios from "axios";
 import moment from "moment";
-import stubs from "../defaultStubs"
-
 
 const Editor = (props) => {
     const [font_size,setFontSize]=useState("18px")
@@ -39,7 +37,7 @@ const Editor = (props) => {
         setStatus(null);
         setJobId(null);
         setJobDetails(null);
-        const { data } = await axios.post("http://localhost:5000/run", payload);
+        const { data } = await axios.post(`http://localhost:80/run`, payload);
         if (data.jobId) {
           setJobId(data.jobId);
           setStatus("Processing");
@@ -47,7 +45,7 @@ const Editor = (props) => {
           // poll here
           pollInterval = setInterval(async () => {
             const { data: statusRes } = await axios.get(
-              `http://localhost:5000/status`,
+              `http://localhost:80/status`,
               {
                 params: {
                   id: data.jobId,

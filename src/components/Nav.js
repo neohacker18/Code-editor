@@ -2,10 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default function Navbar(props) {
-  const setDefaultTheme = () => {
-    localStorage.setItem("default-mode", props.mode);
-    console.log(`${props.mode} set as default!`);
-  };
   return (
     <nav className={`navbar navbar-expand-lg  nav-${props.mode}`}>
     <div className="container-fluid">
