@@ -13,14 +13,14 @@ Techstack Used :-
 
 <div>
     <h5>Code Execution</h5>
-    <img src="./client/images/executed.png" style="margin-bottom:50;"/>
+    <img src="./images/executed.png" style="margin-bottom:50;"/>
     <h5>Output Window</h5>
-    <img src="./client/images/exec-with-output.png" 
+    <img src="./images/exec-with-output.png" 
     style="margin-bottom:50;"/>
     <h5>Error Detection</h5>
-    <img src="./client/images/error.png" style="margin-bottom:50;"/>
+    <img src="./images/error.png" style="margin-bottom:50;"/>
     <h5>You can also switch to the lightmode</h5>
-    <img src="./client/images/lightmode.png" style="margin-bottom:50;"/>
+    <img src="./images/lightmode.png" style="margin-bottom:50;"/>
     <h5>Better IDE also supports Python code execution.</h5>
-    <img src="./client/images/py-support.png" style="margin-bottom:50;"/>
+    <img src="./images/py-support.png" style="margin-bottom:50;"/>
 </div>
