@@ -1,3 +1,0 @@
-backend->npm start
-frontend->npm start
-wsl (for redis)->redis-cli ping
