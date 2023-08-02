@@ -25,7 +25,7 @@ const Editor = (props) => {
       const defaultLang = localStorage.getItem("default-language") || "cpp";
       setLanguage(defaultLang);
     }, []);
-    console.log(jobId)
+    // console.log(jobId)
     let pollInterval;
     const handleSubmit = async () => {
       const payload = {
@@ -37,12 +37,11 @@ const Editor = (props) => {
         setStatus(null);
         setJobId(null);
         setJobDetails(null);
-        const { data } = await axios.post(`http://localhost:80/run`, payload);
+        const {data}  = await axios.post(`http://localhost:80/run`, payload)
         if (data.jobId) {
           setJobId(data.jobId);
           setStatus("Processing");
-  
-          // poll here
+
           pollInterval = setInterval(async () => {
             const { data: statusRes } = await axios.get(
               `http://localhost:80/status`,
@@ -51,14 +50,18 @@ const Editor = (props) => {
                   id: data.jobId,
                 },
               }
-            );
+            )
             const { success, job, error } = statusRes;
-            console.log(statusRes);
             if (success) {
               const { status: jobStatus, output: jobOutput } = job;
               setStatus(jobStatus);
               setJobDetails(job);
               if (jobStatus === "pending") return;
+              if(jobStatus==='error'){
+                setOutput('There are some errors in your code. Please rectify and try again later.');
+                clearInterval(pollInterval);
+                return;
+              }
               setOutput(jobOutput);
               clearInterval(pollInterval);
             } else {
@@ -74,7 +77,7 @@ const Editor = (props) => {
       } catch ({ response }) {
         if (response) {
           const errMsg = response.data.err.stderr;
-          setOutput(errMsg);
+          setOutput("Error: "+ errMsg);
         } else {
           setOutput("Please retry submitting.");
         }
@@ -85,7 +88,7 @@ const Editor = (props) => {
       props.showAlert(`${language} set as default!`);
     };
    
-  console.log(status)
+  // console.log(status)
     const renderTimeDetails = () => {
       if (!jobDetails) {
         return "";
@@ -106,8 +109,8 @@ const Editor = (props) => {
     <div className={`hero${props.mode}`}>
       <div className="container">
         <br />
-          <div class="d-flex align-items-center">
-  <div class="p-2"><select className="btn btn-sm btn-dark"
+          <div className="d-flex align-items-center">
+  <div className="p-2"><select className="btn btn-sm btn-dark"
           value={language}
           onChange={(e) => {
               setLanguage(e.target.value);
@@ -118,10 +121,10 @@ const Editor = (props) => {
           <option value="py">Python</option>
         </select>
      </div>
-  <div class="p-2">
+  <div className="p-2">
         <button className="btn btn-sm btn-dark" onClick={setDefaultLanguage}>Set Default</button>
   </div>
-  <div class="p-2">
+  <div className="p-2">
         <select className="btn btn-sm btn-dark" value={theme}
         onChange={(e) => {
             setTheme(e.target.value);
@@ -129,12 +132,12 @@ const Editor = (props) => {
           }}>
             <option value="terminal">Terminal</option>
             <option value="github">Github</option>
-            <option value="solarized_dark">Solarized_dark</option>
-            <option value="solarized_light">Solarized_light</option>
+            <option value="solarized dark">Solarized_dark</option>
+            <option value="solarized light">Solarized_light</option>
             <option value="twilight">Twilight</option>
         </select>
   </div>
-  <div class="p-2">
+  <div className="p-2">
         <select className="btn btn-sm btn-dark" value={font_size}
         onChange={(e) => {
             setFontSize(e.target.value);
@@ -165,9 +168,9 @@ const Editor = (props) => {
       <button className="btn submitButton"onClick={handleSubmit}>Submit</button>
       <div>
       <br />
-        {status!=='success' && status && <button class="btn btn-warning" type="button" disabled>
-  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  <span> {status}</span>
+        {status!=='success' && status && <button className="btn btn-warning" type="button" disabled>
+  {status!=='error' && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+  <span> {status==='error'?"Error!":status==='pending'?"Pending":status}</span>
 </button>}
   {(status==='success' || status==='error') &&<div className={`outputContainer${status}`}>
     <h5 style={{fontSize:'1.2rem'}}>Output:</h5>
