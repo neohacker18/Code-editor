@@ -5,7 +5,7 @@ const path = require("path")
 require("dotenv").config();
 
 const CONNECTION_URL=process.env.MONGODB_URI
-const PORT =process.env.PORT;
+const PORT =process.env.PORT || 80;
 
 const { generateFile } = require("./generateFile");
 
@@ -22,7 +22,7 @@ mongoose.connect(
   },
   (err) => {
     err && console.error(err);
-    console.log("Successfully connected to MongoDB: compilerdb");
+    console.log("Successfully connected to MongoDB");
   }
 );
 
@@ -39,12 +39,13 @@ app.use(express.static(path.join(__dirname,"build")))
 app.post("/run", async (req, res) => {
   const { language = "cpp", code } = req.body;
   console.log(language, "Length:", code?code.length:0);
+  console.log(code)
   if (code === undefined) {
     return res.status(400).json({ success: false, error: "Empty code body!" });
   }
   const {filepath,message} = await generateFile(language, code[0]);
- 
   const job = await new Job({ language, filepath }).save();
+  console.log(job)
   const jobId = job["_id"];
   addJobToQueue(jobId)
   return res.status(201).json({ jobId});
