@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { v4: uuid } = require("uuid"); //renaming function v4 as uuid
+const { v4: uuid } = require("uuid"); 
 
 const dirCodes = path.join(__dirname, "codes");
 
