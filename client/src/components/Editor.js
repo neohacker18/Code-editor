@@ -37,14 +37,16 @@ const Editor = (props) => {
         setStatus(null);
         setJobId(null);
         setJobDetails(null);
-        const {data}  = await axios.post(`http://localhost:80/run`, payload)
+        // const {data}  = await axios.post(`http://localhost:80/run`, payload)
+        const {data}  = await axios.post(`https://online-code-editor-p0pb.onrender.com/run`, payload)
         if (data.jobId) {
           setJobId(data.jobId);
           setStatus("Processing");
 
           pollInterval = setInterval(async () => {
             const { data: statusRes } = await axios.get(
-              `http://localhost:80/status`,
+              // `http://localhost:80/status`,
+              `https://online-code-editor-p0pb.onrender.com/status`,
               {
                 params: {
                   id: data.jobId,
